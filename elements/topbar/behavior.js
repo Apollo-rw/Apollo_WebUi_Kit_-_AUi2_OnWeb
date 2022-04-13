@@ -110,4 +110,4 @@ function backScreen() {
     setTimeout(function() {
         document.getElementById('topBar-subtitle').style.opacity = '1';
     },1200)
-}     
+}
