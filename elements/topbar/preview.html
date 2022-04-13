@@ -1,0 +1,569 @@
+<!--Do not use this code! it's just a preview, so it may contain useless elements or just for show. Use the Code available in "code.html".-->
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <link rel="icon" href="src/media/app_icon.png">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="styles.css">
+
+        <title>Λpollo AUi2 OnWeb - TopBar</title>
+
+        <style>
+            @media (prefers-color-scheme: light) {
+                :root {
+                    --statusBar-background_color: #fdfdfd;
+                    --statusBar-content_color: #4c4c4c;
+
+                    --app-background_color: #fdfdfd;
+
+                    --hint_badge-background_color: #0a0a0a;
+                    --hint_badge-label_color: #ffffffe3;
+
+                    --navBar-background_color: #fdfdfd;
+                    --navBar-content_color: #4c4c4c;
+                    
+                    --THIS-border-color: #ff0000;
+
+                    --i_color-for_HintBadge-forbidden: #e72424;
+                    --i_color-for_HintBadge-update: #2499e7;
+                }
+            }
+
+            @media (prefers-color-scheme: dark) {
+                :root {
+                    --statusBar-background_color: #0a0a0a;
+                    --statusBar-content_color: #ffffffe3;
+
+                    --app-background_color: #0a0a0a;
+
+                    --hint_badge-background_color: #fdfdfd;
+                    --hint_badge-label_color: #4c4c4c;
+
+                    --navBar-background_color: #0a0a0a;
+                    --navBar-content_color: #ffffffe3;
+
+                    --THIS-border-color: #ff0000;
+
+                    --i_color-for_HintBadge-forbidden: #e72424;
+                    --i_color-for_HintBadge-update: #2499e7;
+                }
+            }
+
+            .border {
+                border: 1px solid var(--THIS-border-color);
+            }
+
+            /*Reset Basic Elements*/
+            *, *:before, *:after {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+                text-decoration: none;
+            }
+
+            .hr {
+                border: 0px;
+                border-bottom: 1px solid var(--ppm-border-color) !important;
+            }
+
+            /*statusbar*/
+            .statusBar-container {
+                height: 25px;
+                width: 100%;
+                padding: 0px 5px;
+                display: flex;
+                flex-direction: row;
+                color: var(--statusBar-content_color);
+                background: var(--statusBar-background_color);
+                font-family: 'Roboto Condensed', Sans-Serif;
+                font-size: 18px;
+                position: fixed;
+                top: 0;
+                min-width: 300px;
+                z-index: 300;
+            }
+
+            /*statusbar content divider*/
+            .statusBar-container-leftContent {
+                align-items: center;
+                justify-content: flex-start;
+                display: flex;
+                flex-direction: row;
+                max-width: 50%;
+                width: 50%;
+            }
+
+            .statusBar-container-rightContent {
+                align-items: center;
+                justify-content: flex-end;
+                display: flex;
+                flex-direction: row;
+                max-width: 50%;
+                width: 50%;
+            }
+
+            /*statusbar icons*/
+            .statusBar-icon {
+                min-width: 20px;
+                max-width: 20px;
+                width: 20px;
+                min-height: 20px;
+                max-height: 20px;
+                height: 20px;
+            }
+
+            .statusBar-brandIcon {
+                font-family: 'Roboto', Sans-Serif !important;
+                font-weight: bold;
+            }
+            /*statusbar icon margins*/
+            .statusBar-leftIcon {
+                margin-right: 5px;
+            }
+
+            .statusBar-rightIcon {
+                margin-left: 5px;
+            }
+
+            /*general application structure*/
+            body {
+                background: var(--app-background_color);
+                width: 100vw;
+                height: 100vh;
+                min-width: 300px;
+            }
+
+            /*main and interactive app content*/
+            .main_content {
+                width: 100%;
+                height: 100%;
+                padding: 140px 0px 15px 0px;
+                transition: 0.7s ease;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            /*navBar*/
+            .navBar-container {
+                color: var(--navBar-content_color);
+                background: var(--navBar-background-color);
+                display: flex;
+                justify-content: center;
+                width: 100%;
+                height: 42px;
+                position: fixed;
+                bottom: 0;
+                overflow: hidden;
+                transition: 0.7s cubic-bezier(0.65, 0.05, 0.36, 1);
+            }
+
+            /*navbar buttons structure*/
+            .navBar-button {
+                height: 100%;
+                width: 100px;
+                border-radius: 50px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                margin: 0px -5px;
+            }
+            /*show and hide navigation bar button*/
+            .navBar-button_showHide {
+                height: 100%;
+                width: 34px;
+                border-radius: 10px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                position: absolute;
+                left: 10px;
+            }
+
+            /*navbar icons*/
+            .navBar-icon {
+                min-height: 20px;
+                max-height: 20px;
+                min-width: 20px;
+                max-width: 20px;
+                width: 20px;
+                height: 20px;
+            }
+
+            /*hint badge*/
+            .hint_badge-container {
+                width: fit-content;
+                max-width: 350px;
+                background: var(--hint_badge-background_color);
+                padding: 10px;
+                position: fixed;
+                left: 0;
+                right: 0;
+                bottom: 12%;
+                margin: 0 auto;
+                display: none;
+                justify-content: center;
+                align-items: center;
+                border-radius: 15px;
+                transition: 0.6s;
+                opacity: 0;
+            }
+
+            /*hint badge label*/
+            .hint_badge-label {
+                font-size: 18px;
+                font-family: "Roboto Condensed", Sans-Serif;
+                font-weight: 400;
+                color: var(--hint_badge-label_color);
+            }
+
+            /*hint badge icon*/
+            .hint_badge-icon {
+                min-width: 20px;
+                max-width: 20px;
+                max-height: 20px;
+                min-height: 20px;
+                height: 20px;
+                width: 20px;
+            }
+
+            /*popup menu*/
+            .popupMenu-container {
+                position: relative;
+            }
+
+            /*options container*/
+            .popupMenu-optionsContainer {
+                background: var(--ppm-background_color);
+                border: 1px solid var(--ppm-border-color);
+                border-radius: 10px;
+                overflow: hidden;
+                position: absolute;
+                top: 0px;
+                right: 10px;
+                opacity: 0;
+                display: none;
+                transition: 0.5s cubic-bezier(0.98,-0.37, 0.4, 1.29);
+                box-shadow: 0px 20px 20px 0px var(--ppm-shadow_color);
+            }
+
+            /*option*/
+            .popupMenu-option {
+                padding: 8px 10px;
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+                min-width: 140px;
+                position: relative;
+                color: var(--ppm-content_color);
+            }
+
+            /*label*/
+            .popupMenu-option-label {
+                font-family: 'Roboto', Sans-Serif;
+                font-size: 16px;
+                font-weight: 400;
+            }
+
+            /*icon*/
+            .popupMenu-option-icon {
+                width: 24px;
+                min-width: 24px;
+                height: 24px;
+                min-height: 24px;
+            }
+
+            /*margins*/
+            .popupMenu-option-icon-mr {
+                margin-right: 10px;
+            }
+
+            .popupMenu-option-icon-ml {
+                margin-left: 10px;
+            }
+
+            /*content left of option*/
+            .popupMenu-option-contentL {
+                display: flex;
+                justify-content: flex-start;
+                align-items: center;
+                height: 100%;
+            }
+
+            /*content right of option*/
+            .popupMenu-option-contentR {
+                display: flex;
+                justify-content: flex-end;
+                align-items: center;
+                height: 100%;
+            }
+
+            /*button*/
+            .button {
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                align-items: center;
+                padding: 8px 10px;
+                min-width: 70px;
+                width: fit-content;
+                height: fit-content;
+                position: relative;
+                margin: 0px 5px;
+                transition: 0.7s;
+            }
+
+            /*button label*/
+            .button-label {
+                font-family: 'Roboto Condensed', Sans-Serif;
+                font-size: 16px;
+                font-weight: 600;
+                text-transform: uppercase;
+                text-decoration-line: none;
+                text-decoration: none;
+            }
+
+            .btn-t-style1 {
+                color: #02a1f5;
+                background: transparent;
+            }
+        </style>
+    </head>
+
+    <!--Do not use this code! it's just a preview, so it may contain useless elements or just for show. Use the Code available in "code.html".-->
+    <body onload="startTime()">        
+        <a onclick="hintBadge_forbidden(), THIS()">
+            <div data-ripple class="statusBar-container">
+                <div class="statusBar-container-leftContent">
+                    <p class="statusBar-brandIcon statusBar-leftIcon">Λ</p>
+                </div>
+
+                <div class="statusBar-container-rightContent">
+                    <svg class="statusBar-icon" style="padding-bottom: 1px; margin-right: 1px;" viewBox="0 0 24 24">
+                        <path fill="currentColor" d="M12,3C7.79,3 3.7,4.41 0.38,7C4.41,12.06 7.89,16.37 12,21.5C16.08,16.42 20.24,11.24 23.65,7C20.32,4.41 16.22,3 12,3M12,5C15.07,5 18.09,5.86 20.71,7.45L18.77,9.88C17.26,9 14.88,8 12,8C9,8 6.68,9 5.21,9.84L3.27,7.44C5.91,5.85 8.93,5 12,5Z" />
+                    </svg>
+
+                    <svg style="opacity: 0.5; padding: 1px;" class="statusBar-icon" viewBox="0 0 24 24">
+                        <path fill="currentColor" d="M20.84 22.73L19.46 21.35C19.1 21.75 18.58 22 18 22H6C4.89 22 4 21.11 4 20V8L5.06 6.95L1.11 3L2.39 1.73L22.11 21.46L20.84 22.73M20 4C20 2.9 19.11 2 18 2H10L7.6 4.4L20 16.8V4Z" />
+                    </svg>
+
+                    <p style="margin-left: 3px; padding-top: 2px;">90%</p>
+
+                    <svg class="statusBar-icon" viewBox="0 0 24 24">
+                        <path fill="currentColor" d="M16,8H8V6H16M16.67,4H15V2H9V4H7.33A1.33,1.33 0 0,0 6,5.33V20.67C6,21.4 6.6,22 7.33,22H16.67A1.33,1.33 0 0,0 18,20.67V5.33C18,4.6 17.4,4 16.67,4Z" />
+                    </svg>
+
+                    <p style="padding-top: 2px;" id="statusBar-clock"></p>
+                </div>
+            </div>
+        </a>
+
+        <div class="topBar-container">
+            <div id="back-btn-actived" class="topBar-container-leftContent">
+                <a id="back-btn" style="min-width: 0; min-height: 0; padding: 0;" data-ripple class="topBar-iconButton topBar-leftIcon" onclick="backScreen(), btnTextChangeOnBack()">
+                    <svg id="back-btn-i" style="opacity: 0; width: 0; height: 0;" class="topBar-icon" viewBox="0 0 24 24">
+                        <path fill="currentColor" d="M15.41,16.58L10.83,12L15.41,7.41L14,6L8,12L14,18L15.41,16.58Z" />
+                    </svg>
+                </a>
+                <div>
+                    <p id="topBar-title" class="topBar-title">App Title</p>
+                    <p id="topBar-subtitle" class="topBar-subtitle" style="font-size: 14px; opacity: 1;">App Subtitle, info, or desc</p>
+                </div>
+                
+            </div>
+
+            <div class="topBar-container-rightContent">
+                <a id="heart-i-btn" style="display: none; opacity: 0;" data-ripple class="topBar-iconButton topBar-rightIcon" onclick="hintBadge_forbidden()">
+                    <svg class="topBar-icon" viewBox="0 0 24 24">
+                        <path fill="currentColor" d="M12,21.35L10.55,20.03C5.4,15.36 2,12.27 2,8.5C2,5.41 4.42,3 7.5,3C9.24,3 10.91,3.81 12,5.08C13.09,3.81 14.76,3 16.5,3C19.58,3 22,5.41 22,8.5C22,12.27 18.6,15.36 13.45,20.03L12,21.35Z" />
+                    </svg>
+                </a>
+
+                <a id="THIS1" data-ripple class="topBar-iconButton topBar-rightIcon" onclick="hintBadge_forbidden()">
+                    <svg class="topBar-icon" viewBox="0 0 24 24">
+                        <path id="notification-i" style="opacity: 0; transition: 0.7s ease;" fill="currentColor" d="M21,19V20H3V19L5,17V11C5,7.9 7.03,5.17 10,4.29C10,4.19 10,4.1 10,4A2,2 0 0,1 12,2A2,2 0 0,1 14,4C14,4.1 14,4.19 14,4.29C16.97,5.17 19,7.9 19,11V17L21,19M14,21A2,2 0 0,1 12,23A2,2 0 0,1 10,21" />
+                        <path id="search-i" style="opacity: 1; transition: 0.7s ease;" fill="currentColor" d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z" />
+                    </svg>
+                </a>
+
+                <a id="THIS2" data-ripple class="topBar-iconButton topBar-rightIcon" onclick="hintBadge_update()">
+                    <svg class="topBar-icon" viewBox="0 0 24 24">
+                        <path fill="currentColor" d="M12,16A2,2 0 0,1 14,18A2,2 0 0,1 12,20A2,2 0 0,1 10,18A2,2 0 0,1 12,16M12,10A2,2 0 0,1 14,12A2,2 0 0,1 12,14A2,2 0 0,1 10,12A2,2 0 0,1 12,10M12,4A2,2 0 0,1 14,6A2,2 0 0,1 12,8A2,2 0 0,1 10,6A2,2 0 0,1 12,4Z" />
+                    </svg>
+                </a>
+            </div>
+        </div>
+
+        <div class="main_content">
+            <a id="THIS3" data-ripple onclick="nextScreen(), btnTextChange()" class="button btn-t-style1">
+                <p id="changeThisText" style="display: block;" class="button-label">click me</p>
+                <p id="changeThisText1" style="display: none;" class="button-label">Interaction only in red</p>
+            </a>
+        </div>
+
+        <div class="hint_badge-box">
+            <div id="hint_badge-forbidden" class="hint_badge-container">
+                <svg style="color: var(--i_color-for_HintBadge-forbidden); margin-right: 10px;" class="hint_badge-icon" viewBox="0 0 24 24">
+                    <path fill="currentColor" d="M12 2C17.5 2 22 6.5 22 12S17.5 22 12 22 2 17.5 2 12 6.5 2 12 2M12 4C10.1 4 8.4 4.6 7.1 5.7L18.3 16.9C19.3 15.5 20 13.8 20 12C20 7.6 16.4 4 12 4M16.9 18.3L5.7 7.1C4.6 8.4 4 10.1 4 12C4 16.4 7.6 20 12 20C13.9 20 15.6 19.4 16.9 18.3Z" />
+                </svg>
+
+                <p class="hint_badge-label">
+                    No action
+                </p>
+            </div>
+
+            <div id="hint_badge-update" class="hint_badge-container">
+                <svg style="color: var(--i_color-for_HintBadge-update); margin-right: 10px;" class="hint_badge-icon" viewBox="0 0 24 24">
+                    <path fill="currentColor" d="M21,10.12H14.22L16.96,7.3C14.23,4.6 9.81,4.5 7.08,7.2C4.35,9.91 4.35,14.28 7.08,17C9.81,19.7 14.23,19.7 16.96,17C18.32,15.65 19,14.08 19,12.1H21C21,14.08 20.12,16.65 18.36,18.39C14.85,21.87 9.15,21.87 5.64,18.39C2.14,14.92 2.11,9.28 5.62,5.81C9.13,2.34 14.76,2.34 18.27,5.81L21,3V10.12M12.5,8V12.25L16,14.33L15.28,15.54L11,13V8H12.5Z" />
+                </svg>
+
+                <p class="hint_badge-label">
+                    Will be added in future updates
+                </p>
+            </div>
+        </div>
+
+        <div id="navBar-container-showHide" class="navBar-container">
+            <a onclick="hintBadge_forbidden(), THIS()" data-ripple class="navBar-button_showHide">
+                <svg class="navBar-icon" viewBox="0 0 24 24">
+                    <path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" />
+                </svg>
+            </a>
+
+            <a onclick="hintBadge_forbidden(), THIS()" data-ripple class="navBar-button">
+                <svg class="navBar-icon" viewBox="0 0 24 24">
+                    <path fill="currentColor" d="M3,3H21V21H3V3M5,5V19H19V5H5Z" />
+                </svg>
+            </a>
+
+            <a onclick="hintBadge_forbidden(), THIS()" data-ripple class="navBar-button">
+                <svg class="navBar-icon" viewBox="0 0 24 24">
+                    <path fill="currentColor" d="M12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z" />
+                </svg>
+            </a>
+
+            <a onclick="hintBadge_forbidden(), THIS()" data-ripple class="navBar-button">
+                <svg style="transform: rotate(270deg);" class="navBar-icon" viewBox="0 0 24 24">
+                    <path fill="currentColor" d="M12,2L1,21H23M12,6L19.53,19H4.47" />
+                </svg>
+            </a>
+        </div>
+    </body>
+
+    <script src="https://code.jquery.com/jquery-2.1.4.js"></script>
+    <script src="behavior.js"></script>
+
+    <script>
+        //hint badge
+        function hintBadge_forbidden() {
+            document.getElementById('hint_badge-forbidden').style.display = "flex";
+            
+            setTimeout(function() {
+                document.getElementById('hint_badge-forbidden').style.opacity = "1";
+            },100)
+
+            setTimeout(function() {
+                document.getElementById('hint_badge-forbidden').style.opacity = "0";
+            },4000)
+
+            setTimeout(function() {
+                document.getElementById('hint_badge-forbidden').style.display = "none";
+            },4500)
+        }
+
+        function hintBadge_update() {
+            document.getElementById('hint_badge-update').style.display = "flex";
+            
+            setTimeout(function() {
+                document.getElementById('hint_badge-update').style.opacity = "1";
+            },100)
+
+            setTimeout(function() {
+                document.getElementById('hint_badge-update').style.opacity = "0";
+            },4000)
+
+            setTimeout(function() {
+                document.getElementById('hint_badge-update').style.display = "none";
+            },4500)
+        }
+    </script>
+
+    <script>
+        //show popup menu
+        function ppmHome_show() {
+            document.getElementById('ppmHome').style.display = 'block';
+            
+            setTimeout(function() {
+                document.getElementById('ppmHome').style.opacity = '1';
+            },10)
+
+            setTimeout(function() {
+                document.getElementById('ppmHome').style.opacity = '0';
+            },7000)
+
+            setTimeout(function() {
+                document.getElementById('ppmHome').style.display = 'none';
+            },7400)
+        }
+    </script>
+
+    <script>
+        function startTime() {
+        const today = new Date();
+        let h = today.getHours();
+        let m = today.getMinutes();
+        let s = today.getSeconds();
+        h = checkTime(h);
+        m = checkTime(m);
+        s = checkTime(s);
+        document.getElementById('statusBar-clock').innerHTML =  h + ":" + m;
+        setTimeout(startTime, 1000);
+    }
+    
+    function checkTime(i) {
+        if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
+        return i;
+    }
+    </script>
+
+    <script>
+        function btnTextChange() {
+            document.getElementById('changeThisText').innerText = "Click on back icon";
+        }
+
+        function btnTextChangeOnBack() {
+            document.getElementById('changeThisText').innerText = "Click me";
+        }
+    </script>
+
+    <script>
+        function THIS() {
+            document.getElementById('THIS1').classList.add('border');
+            document.getElementById('THIS2').classList.add('border');
+            document.getElementById('back-btn').classList.add('border');
+            document.getElementById('THIS3').classList.add('border');
+            document.getElementById('heart-i-btn').classList.add('border');
+            document.getElementById('changeThisText').style.display = "none";
+            document.getElementById('changeThisText1').style.display = "block";
+            document.getElementById('THIS3').style.color = "red";
+
+            
+
+        setTimeout(function() {
+            document.getElementById('THIS1').classList.remove('border');
+            document.getElementById('THIS2').classList.remove('border');
+            document.getElementById('back-btn').classList.remove('border');
+            document.getElementById('THIS3').classList.remove('border');
+            document.getElementById('heart-i-btn').classList.remove('border');
+            document.getElementById('changeThisText1').style.display = "none";
+            document.getElementById('changeThisText').style.display = "block";
+            document.getElementById('THIS3').style.color = "";
+        },2000)
+    }
+    </script>
+</html>

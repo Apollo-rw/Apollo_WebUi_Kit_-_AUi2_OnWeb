@@ -1,0 +1,168 @@
+/*fonts:
+_MAIN -- Roboto
+_TITLES -- Roboto Condensed
+_BRANDS -- Comfortaa
+_NUMBERS -- Dosis (Only Numbers)
+_CONSOLE -- Roboto Mono
+*/
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;500;600;700&family=Dosis:wght@200;300;400;500;600;700;800&family=Roboto+Condensed:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Roboto+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+@media (prefers-color-scheme: light) {
+    :root {
+        --topBar-background_color: #fdfdfd; /*Same main app background color*/
+        --topBar-content_color: #4c4c4c; /*Usually the inverse color of the background color*/
+
+        --rippleEffect-color: #000000;
+        --rippleEffect-opacity: 0.3;
+
+
+        /*Create themes in this mode only.
+        */
+    }
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --topBar-background_color: #0a0a0a; /*Same main app background color*/
+        --topBar-content_color: #ffffffe3; /*Usually the inverse color of the background color*/
+
+        --rippleEffect-color: #FFFFFF;
+        --rippleEffect-opacity: 0.3;
+
+        /*For creating themes, we recommend using the following prefix: ElementName-WhereColorWillBePlaced_type(color, opacity, or other). Ex: --navBar-i_color, --hintBadge-content_color
+        
+        abbreviations
+        i == icon
+        sys == system
+
+        Create themes in Light mode only.
+        */
+    }
+}
+
+*, *:before, *:after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+}
+
+body {
+    background: var(--app-background_color);
+    width: 100vw;
+    height: 100vh;
+    min-width: 300px;
+}
+
+/*ripple effect for touch. special thanks: https://stackoverflow.com/questions/30074246/how-to-create-ripple-effect-on-click-material-design*/
+.ripple{
+    position: absolute;
+    top:0; left:0; bottom:0; right:0;
+    overflow: hidden;
+    -webkit-transform: translateZ(0); /* to contain zoomed ripple */
+    transform: translateZ(0);
+    border-radius: inherit; /* inherit from parent (rounded buttons etc) */
+    pointer-events: none; /* allow user interaction */
+            animation: ripple-shadow 0.4s forwards;
+    -webkit-animation: ripple-shadow 0.4s forwards;
+}
+
+.rippleWave{
+    backface-visibility: hidden;
+    position: absolute;
+    border-radius: 50%;
+    transform: scale(0.7); -webkit-transform: scale(0.7);
+    background: var(--rippleEffect-color);
+    opacity: var(--rippleEffect-opacity);
+            animation: ripple 1s forwards;
+    -webkit-animation: ripple 1s forwards;
+}
+
+@keyframes ripple {
+    to {transform: scale(24); opacity:0;}
+}
+
+@-webkit-keyframes ripple {
+    to {-webkit-transform: scale(24); opacity:0;}
+}
+
+/*topbar*/
+.topBar-container {
+    height: 90px;
+    width: 100%;
+    min-width: 300px;
+    display: flex;
+    flex-direction: row;
+    color: var(--topBar-content_color);
+    position: fixed;
+    top: 25px;
+    z-index: 300;
+    background: var(--topBar-background_color);
+}
+
+/*content on the left side of the topbar*/
+.topBar-container-leftContent {
+    align-items: center;
+    justify-content: flex-start;
+    display: flex;
+    flex-direction: row;
+    margin: 0px 15px;
+    width: 80%;
+    transition: 0.7s ease;
+}
+
+/*title & subtitle in the topbar*/
+.topBar-title {
+    font-family: 'Roboto Condensed', Sans-Serif;
+    font-weight: bold;
+    font-size: 18px;
+    text-transform: uppercase;
+    transition: 0.5s ease;
+}
+
+.topBar-subtitle {
+    font-family: 'Roboto', Sans-Serif;
+    font-weight: 400;
+    font-size: 16px;
+    transition: 0.5s ease;
+}
+
+/*topbar icon button*/
+.topBar-iconButton {
+    max-width: 40px;
+    max-height: 40px;
+    min-height: 40px;
+    min-width: 40px;
+    padding: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50px;
+    transition: 0.7s ease;
+}
+
+/*content on the left side of the topbar*/
+.topBar-container-rightContent {
+    align-items: center;
+    justify-content: flex-end;
+    display: flex;
+    flex-direction: row;
+    margin: 0px 5px;
+    width: 50%;
+}
+
+/*topbar icon*/
+.topBar-icon {
+    width: 24px;
+    height: 24px;
+    transition: 0.7s ease;
+}
+
+/*topbar icon margins*/
+.topBar-leftIcon {
+    margin-right: 5px;
+}   
+
+.topBar-rightIcon {
+    margin-left: 5px;
+}
