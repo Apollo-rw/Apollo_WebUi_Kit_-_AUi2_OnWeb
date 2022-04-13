@@ -20,7 +20,7 @@ _CONSOLE -- Roboto Mono
         */
     }
 }
- 
+
 @media (prefers-color-scheme: dark) {
     :root {
         --topBar-background_color: #0a0a0a; /*Same main app background color*/
